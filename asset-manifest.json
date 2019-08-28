@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/creative-mon-lunch/static/css/main.19393e92.chunk.css",
+    "main.js": "/creative-mon-lunch/static/js/main.22688170.chunk.js",
+    "main.js.map": "/creative-mon-lunch/static/js/main.22688170.chunk.js.map",
+    "runtime~main.js": "/creative-mon-lunch/static/js/runtime~main.388dc34e.js",
+    "runtime~main.js.map": "/creative-mon-lunch/static/js/runtime~main.388dc34e.js.map",
+    "static/js/2.8e81e436.chunk.js": "/creative-mon-lunch/static/js/2.8e81e436.chunk.js",
+    "static/js/2.8e81e436.chunk.js.map": "/creative-mon-lunch/static/js/2.8e81e436.chunk.js.map",
+    "index.html": "/creative-mon-lunch/index.html",
+    "precache-manifest.cbc21fa7f37d8290eb36190861097be0.js": "/creative-mon-lunch/precache-manifest.cbc21fa7f37d8290eb36190861097be0.js",
+    "service-worker.js": "/creative-mon-lunch/service-worker.js",
+    "static/css/main.19393e92.chunk.css.map": "/creative-mon-lunch/static/css/main.19393e92.chunk.css.map",
+    "static/media/logo.svg": "/creative-mon-lunch/static/media/logo.5d5d9eef.svg"
+  }
+}
