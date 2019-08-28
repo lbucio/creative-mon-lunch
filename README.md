@@ -2,6 +2,10 @@
 
 [View App](https://lbucio.github.io/creative-mon-lunch/)
 
+[Moodboard](https://pasteapp.com/p/DJQYlf9i6KM?view=ZDaG2r81xTG)
+
+[Wireframe](https://www.figma.com/file/U7kZ3Lcr9AyDB4U5LUap7E/Creative-Mon-Lunch?node-id=0%3A1)
+
 ## Available Scripts
 
 In the project directory, you can run:
