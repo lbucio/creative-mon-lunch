@@ -1,0 +1,39 @@
+.navbar {
+    background-color: var(--color-black);
+}
+
+.navbar__nav {
+    height: 60px;
+    display: flex;
+    align-items: stretch;
+}
+
+.navbar__nav-left, .navbar__nav-right {
+    display: flex;
+    align-items: stretch;
+}
+
+.navbar__nav-left {
+    justify-self: flex-start;
+    margin-right: auto;
+}
+.navbar__nav-right {
+    justify-self: flex-end;
+    margin-left: auto;
+}
+
+.navbar__nav-link {
+    display: flex;
+    align-items: center;
+
+    color: var(--color-white);
+    text-decoration: none;
+
+    line-height: 1.5;
+    padding: .5rem .75rem;
+    position: relative;
+    
+    &:visited {
+        color: var(--color-white);
+    }
+}
