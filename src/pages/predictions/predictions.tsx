@@ -52,8 +52,12 @@ const Predictions: React.FC<Props> = ({ prediction }) => {
     <section className="predictions">
       <h1>Predictions</h1>
       <input
+        className="predictions__input"
         type="number"
         onChange={e => setWeekNumber(parseInt(e.target.value))}
+        value={weekNumber}
+        min={0}
+        max={5}
       />
       <div className="predictions__item">
         <h3>Guess</h3>
