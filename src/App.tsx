@@ -10,6 +10,7 @@ import Predictions from './pages/predictions/predictions';
 
 // Components
 import Navbar from './components/navbar/navbar';
+import Leaderboard from './pages/leaderboard/leaderboard';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
 
       <Router>
         <Home path="/" />
+        <Leaderboard path="/leaderboard" />
         <Predictions path="/predictions" />
         <Predictions path="/predictions/:prediction" />
         <NotFound default={true} />
