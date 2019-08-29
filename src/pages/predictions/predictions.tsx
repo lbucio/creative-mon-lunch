@@ -14,31 +14,56 @@ interface Props extends RouteComponentProps {
   prediction?: string;
 }
 
-const trainingData = data.map(week => {
+const encode = (arg: string) => {
+  const array = arg.split("").map(x => x.charCodeAt(0) / 255);
+  return array.reduce((value: number, current: number) => {
+    value += current;
+    return value / array.length;
+  }, 0);
+};
+
+const trainingData = data.map((week: any, i) => {
   const day = parseInt(week.Date.split("/")[1]);
   const weekNumber = Math.round(day / 7);
   const output: netValue = {};
-  output[week.Actual.toLocaleLowerCase()] = 1;
+  let previous = "Zupas";
+  if (i > 0) {
+    previous = data[i - 1].Actual;
+  }
+  const actual = week.Actual.toLocaleLowerCase();
+
+  output[actual] = 1;
+  const input = { weekNumber, previous: encode(previous) };
+
   return {
-    input: { weekNumber },
+    input,
     output
   };
 });
+
+console.log(trainingData);
 
 const net = new brain.NeuralNetwork();
 
 net.train(trainingData);
 
 const Predictions: React.FC<Props> = ({ prediction }) => {
+  const previousWeekActual = data[data.length - 1].Actual.toLowerCase();
   const [weekNumber, setWeekNumber] = useState(0);
-  const [guesses, setGuesses] = useState(net.run(weekNumber));
+  const [guesses, setGuesses] = useState(
+    net.run({ weekNumber, previous: encode(previousWeekActual) })
+  );
   const [sortedGuesses, setSortedGuesses] = useState(
     Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
   );
 
   useEffect(() => {
     if (weekNumber >= 0) {
-      setGuesses(net.run({ weekNumber }));
+      setGuesses(
+        net.run({
+          weekNumber: weekNumber
+        })
+      );
     }
   }, [weekNumber]);
 
