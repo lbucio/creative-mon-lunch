@@ -14,69 +14,77 @@ interface Props extends RouteComponentProps {
   prediction?: string;
 }
 
-const encode = (arg: string) => {
-  const array = arg.split("").map(x => x.charCodeAt(0) / 255);
-  return array.reduce((value: number, current: number) => {
-    value += current;
-    return value / array.length;
-  }, 0);
-};
+// const encode = (arg: string) => {
+//   const array = arg.split("").map(x => x.charCodeAt(0) / 255);
+//   return array.reduce((value: number, current: number) => {
+//     value += current;
+//     return value / array.length;
+//   }, 0);
+// };
 
 const trainingData = data.map((week: any, i) => {
   const day = parseInt(week.Date.split("/")[1]);
-  const weekNumber = Math.round(day / 7);
-  const output: netValue = {};
+  // const weekNumber = Math.round(day / 7);
+  // const output: netValue = {};
   let previous = "Zupas";
   if (i > 0) {
     previous = data[i - 1].Actual;
   }
   const actual = week.Actual.toLocaleLowerCase();
 
-  output[actual] = 1;
-  const input = { weekNumber, previous: encode(previous) };
+  // output = actual;
+  // const input = {  };
 
   return {
-    input,
-    output
+    input: previous,
+    output: actual
   };
 });
 
 console.log(trainingData);
 
-const net = new brain.NeuralNetwork();
+const net = new brain.recurrent.LSTM();
 
-net.train(trainingData);
+// create configuration for training
+const config = {
+  iterations: 300,
+  log: true,
+  logPeriod: 50,
+  layers: [10]
+};
 
-const Predictions: React.FC<Props> = ({ prediction }) => {
+net.train(trainingData, config);
+
+const Predictions: React.FC<Props> = () => {
   const previousWeekActual = data[data.length - 1].Actual.toLowerCase();
-  const [weekNumber, setWeekNumber] = useState(0);
-  const [guesses, setGuesses] = useState(
-    net.run({ weekNumber, previous: encode(previousWeekActual) })
-  );
-  const [sortedGuesses, setSortedGuesses] = useState(
-    Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
-  );
+  const output = net.run("zupas");
+  console.log(output);
+  // const [weekNumber, setWeekNumber] = useState(0);
+  // const [guesses, setGuesses] = useState(net.run(previousWeekActual));
+  // const [sortedGuesses, setSortedGuesses] = useState(
+  //   Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
+  // );
 
-  useEffect(() => {
-    if (weekNumber >= 0) {
-      setGuesses(
-        net.run({
-          weekNumber: weekNumber
-        })
-      );
-    }
-  }, [weekNumber]);
+  // useEffect(() => {
+  //   if (weekNumber >= 0) {
+  //     setGuesses(
+  //       net.run({
+  //         weekNumber: weekNumber
+  //       })
+  //     );
+  //   }
+  // }, [weekNumber]);
 
-  useEffect(() => {
-    setSortedGuesses(
-      Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
-    );
-  }, [guesses]);
+  // useEffect(() => {
+  //   setSortedGuesses(
+  //     Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
+  //   );
+  // }, [guesses]);
 
   return (
     <section className="predictions">
       <h1>Predictions</h1>
-      <input
+      {/* <input
         className="predictions__input"
         type="number"
         onChange={e => setWeekNumber(parseInt(e.target.value))}
@@ -93,7 +101,7 @@ const Predictions: React.FC<Props> = ({ prediction }) => {
           <h3>{guess}</h3>
           <h3>{(guesses[guess] * 100).toFixed(0)}%</h3>
         </div>
-      ))}
+      ))} */}
     </section>
   );
 };
