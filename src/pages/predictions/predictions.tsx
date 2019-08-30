@@ -58,14 +58,17 @@ const Predictions: React.FC<Props> = () => {
         {total} / {data.length}
       </p>
       <div className="predictions__item">
-        <h3>Guess</h3>
+        <p>Guess</p>
+        <p>Result</p>
         <p>Actual</p>
+        <p>Date</p>
       </div>
       {guesses.map((guess: any) => (
         <div key={guess.date} className="predictions__item">
           <h3>{guess.prediction || "??????"}</h3>
           <i>{guess.correct ? "✨" : "❌"}</i>
           <h3>{guess.actual}</h3>
+          <p>{guess.date}</p>
         </div>
       ))}
     </section>
