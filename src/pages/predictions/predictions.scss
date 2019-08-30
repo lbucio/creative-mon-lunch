@@ -1,16 +1,12 @@
 .predictions {
   padding: 1rem;
 
-  &__input-number {
-    border: 1px solid #333;
-    width: 20px;
-    padding: 5px;
-    margin-right: 10px;
-  }
-
-  &__input-text {
-    border: 1px solid #333;
-    padding: 5px;
+  &__ring-circle {
+    stroke-dasharray: 44 44;
+    stroke-dashoffset: 44;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dashoffset .5s ease-out;
   }
 
   &__item {

@@ -1,0 +1,47 @@
+
+.home {
+  display: flex;
+  flex-flow: column;
+  height: calc(100vh - 60px);
+
+  &__main {
+    flex: 1;
+    background: #333;
+    padding: 30px;
+  }
+
+  &__speech {
+    background: #999;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  &__mascot {
+    &--animating {
+      animation: think .5s ease infinite;
+    }
+  }
+
+  &__interactions {
+    background: #666;
+    padding: 10px;
+    display: flex;
+  }
+}
+
+.button {
+  border: 0;
+  color: #FFF;
+  border-radius: 5px;
+  background: #999;
+  padding: 8px;
+  font-size: 1.3rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+@keyframes think {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(.9); }
+  100% { transform: scaleY(1); }
+}

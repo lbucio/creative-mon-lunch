@@ -6,82 +6,66 @@ import data from "../../data/historical";
 
 import "./predictions.scss";
 
-interface netValue {
-  [key: string]: number;
-}
-
 interface Props extends RouteComponentProps {
   prediction?: string;
 }
 
-const count: netValue = {};
-
-const trainingData = data.map((week: any, i) => {
-  const rotationNumber = i % 6;
-  const output: netValue = {};
-  const actual = week.Actual.toLocaleLowerCase();
-
-  output[actual] = 1;
-  count[actual] = count[actual] ? count[actual] + 1 : 1;
-  const input = { rotationNumber };
-
-  return {
-    input,
-    output
-  };
-});
-
-const filteredData = trainingData.filter(
-  // only keep results that have happened more than twice
-  week => count[Object.keys(week.output)[0]] > 2
-);
-
-const net = new brain.NeuralNetwork();
-
-net.train(filteredData);
-
 const Predictions: React.FC<Props> = () => {
-  const [rotationNumber, setRotationNumber] = useState(data.length % 6);
-  const [guesses, setGuesses] = useState(net.run({ rotationNumber }));
-  const [sortedGuesses, setSortedGuesses] = useState(
-    Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
-  );
-
-  useEffect(() => {
-    if (rotationNumber >= 0) {
-      setGuesses(
-        net.run({
-          rotationNumber
-        })
-      );
+  let total = 0;
+  const guesses = data.map(week => {
+    const correct = week.Erin === week.Actual;
+    if (correct) {
+      total += 1;
     }
-  }, [rotationNumber]);
+    return {
+      date: week.Date,
+      prediction: week.Erin,
+      actual: week.Actual,
+      correct
+    };
+  });
+
+  const percent = total / data.length;
+  const inverse = 1 - percent;
+
+  const [circle, setCircle] = useState(44);
 
   useEffect(() => {
-    setSortedGuesses(
-      Object.keys(guesses).sort((a, b) => guesses[b] - guesses[a])
-    );
-  }, [guesses]);
+    setTimeout(() => {
+      setCircle(44 * inverse);
+    }, 300);
+  }, []);
 
   return (
     <section className="predictions">
       <h1>Predictions</h1>
-      <input
-        className="predictions__input-number"
-        type="number"
-        onChange={e => setRotationNumber(parseInt(e.target.value))}
-        value={rotationNumber}
-        min={0}
-        max={5}
-      />
+      <div>
+        {Math.floor(percent * 100)}%{" "}
+        <svg className="predictions__ring" height="20" width="20">
+          <circle
+            className="predictions__ring-circle"
+            style={{ strokeDashoffset: circle }}
+            strokeWidth="5"
+            stroke="green"
+            fill="transparent"
+            r="7"
+            cx="10"
+            cy="10"
+          />
+        </svg>
+      </div>
+      <p>
+        {total} / {data.length}
+      </p>
       <div className="predictions__item">
         <h3>Guess</h3>
-        <p>Probability</p>
+        <p>Actual</p>
       </div>
-      {sortedGuesses.map((guess: any) => (
-        <div key={guess} className="predictions__item">
-          <h3>{guess}</h3>
-          <h3>{(guesses[guess] * 100).toFixed(0)}%</h3>
+      {guesses.map((guess: any) => (
+        <div key={guess.date} className="predictions__item">
+          <h3>{guess.prediction || "??????"}</h3>
+          <i>{guess.correct ? "✨" : "❌"}</i>
+          <h3>{guess.actual}</h3>
         </div>
       ))}
     </section>
