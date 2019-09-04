@@ -17,7 +17,7 @@ const count: netValue = {};
 const trainingData = data.map((week: any, i) => {
   const rotationNumber = i % 6;
   const output: netValue = {};
-  const actual = week.Actual.toLocaleLowerCase();
+  const actual = week.Actual.toLowerCase();
 
   output[actual] = 1;
   count[actual] = count[actual] ? count[actual] + 1 : 1;
