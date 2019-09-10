@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "@reach/router";
-import brain from "brain.js";
-
-import data from "../../data/historical";
 
 import getNextGuess from "../../utils/guess-machine.js";
 
