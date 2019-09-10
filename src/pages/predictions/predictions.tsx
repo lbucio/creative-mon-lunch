@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { RouteComponentProps } from "@reach/router";
-import brain from "brain.js";
 
 import data from "../../data/historical";
 

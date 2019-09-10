@@ -5,6 +5,7 @@
   "homepage": "https://lbucio.github.io/creative-mon-lunch/",
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "@tensorflow/tfjs": "^1.2.9",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.2",
     "@types/reach__router": "^1.2.4",
