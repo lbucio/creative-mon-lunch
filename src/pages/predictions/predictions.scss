@@ -1,0 +1,18 @@
+.predictions {
+  padding: 1rem;
+
+  &__ring-circle {
+    stroke-dasharray: 44 44;
+    stroke-dashoffset: 44;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dashoffset .5s ease-out;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-grey-300);
+  }
+}
