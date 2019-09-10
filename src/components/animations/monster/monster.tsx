@@ -4,7 +4,7 @@ import ReactSVG from "react-svg";
 
 import "./monster.scss";
 
-import monster from "../../../assets/monster-girl.svg";
+import monster from "./monster-girl.svg";
 
 interface Props extends RouteComponentProps {}
 
