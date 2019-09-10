@@ -5,7 +5,7 @@ import getNextGuess from "../../utils/guess-machine.js";
 
 import "./home.scss";
 
-import ant from "../../assets/ant.svg";
+import ant from "../../assets/monster.svg";
 
 interface Props extends RouteComponentProps {}
 
