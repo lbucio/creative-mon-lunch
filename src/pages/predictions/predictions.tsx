@@ -45,18 +45,28 @@ const logos = {
   "Cafe Zupas": zupas
 };
 
-const cards = data.map(week => ({
-  actual: week.Actual,
-  guess: week.Erin,
-  date: week.Date
-}));
+let totalCorrect = 0;
+
+const cards = data.map(week => {
+  const actual = week.Actual;
+  const guess = week.Erin;
+  const date = week.Date;
+  if (actual === guess) {
+    totalCorrect += 1;
+  }
+  return {
+    actual,
+    guess,
+    date
+  };
+});
 
 const to = (i: number) => ({
   x: -20,
   y: i * -2,
   scale: 1,
   rot: -10 + Math.random() * 20,
-  delay: i * 50
+  delay: i * 10
 });
 const from = () => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
 
@@ -66,6 +76,8 @@ const trans = (r: number, s: number) =>
     10}deg) rotateZ(${r}deg) scale(${s})`;
 
 const Predictions: React.FC<Props> = () => {
+  const total = cards;
+
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
   const [props, set] = useSprings(cards.length, i => ({
     ...to(i),
@@ -103,11 +115,17 @@ const Predictions: React.FC<Props> = () => {
   return (
     <main>
       <section className="prediction">
-        <h1>Predictions</h1>
+        <div className="prediction__header">
+          <h1>Predictions</h1>
+          <h4>
+            {totalCorrect} / {cards.length}
+          </h4>
+        </div>
+
         <div>
           {props.map(({ x, y, rot, scale }, i) => {
             const card = cards[i];
-            const date = card.date;
+            const date = new Date(card.date);
             const actual = card.actual;
             const guess = card.guess;
             const correct = actual === guess;
@@ -131,7 +149,14 @@ const Predictions: React.FC<Props> = () => {
                     transform: interpolate([rot, scale], trans)
                   }}
                 >
-                  <p className="prediction__date">{date}</p>
+                  <p className="prediction__date">
+                    {date.toLocaleDateString("en-US", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric"
+                    })}
+                  </p>
                   <div className="prediction__info">
                     <div className="prediction__actual">
                       <img
@@ -149,16 +174,20 @@ const Predictions: React.FC<Props> = () => {
                     {!correct ? (
                       <div className="prediction__guess">
                         <img
-                          className="prediction__logo"
+                          className="prediction__logo prediction__logo--small"
                           src={logos[guess] || lunch}
                           alt={guess}
                         />
                         <p>
-                          I guessed: <span>{guess}</span>
+                          I guessed: <span>{guess || "nothing :("}</span>
                         </p>
                       </div>
                     ) : (
-                      <h3>I GOT IT RIGHT!!!</h3>
+                      <div className="prediction__winner">
+                        <h2 className="prediction__winner-text">
+                          I GOT IT RIGHT!!!
+                        </h2>
+                      </div>
                     )}
                   </div>
                 </animated.div>

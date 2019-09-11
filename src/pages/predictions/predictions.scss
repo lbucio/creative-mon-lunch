@@ -7,6 +7,12 @@
   padding: 0 30px;
   background: #F2F2F2;
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
   &__parent {
     position: absolute;
     width: 100vw;
@@ -27,7 +33,6 @@
     border-radius: 10px;
     box-shadow: 3px 3px 8px 0 rgba(50, 50, 73, .2);
     padding: 40px;
-    border: 1px solid #F2F2F2;
     color: #FFF;
     text-align: center;
     font-weight: bold;
@@ -44,11 +49,31 @@
     align-items: center;
   }
 
+  &__date {
+    margin-bottom: 40px;
+  }
+
   &__logo {
     width: 100%;
     width: 150px;
     height: 150px;
     border: 3px solid #1F0CAD;
     border-radius: 50%;
+    background: #FFF;
+
+    &--small {
+      width: 75px;
+      height: 75px;
+    }
+  }
+
+  &__winner {
+    padding: 10px;
+    position: relative;
+  }
+
+  &__winner-text {
+    padding: 0;
+    margin: 0;
   }
 }
