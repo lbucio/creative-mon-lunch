@@ -1,0 +1,17 @@
+.food {
+  position: absolute;
+  top: 20%;
+  right: 20%;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  cursor: -webkit-grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: pre;
+  -webkit-user-drag: none;
+}
+.food:active {
+  cursor: -webkit-grabbing;
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "@reach/router";
-import Monster from '../../components/animations/monster/monster'
+import Monster from '../../components/animations/monster/monster';
+import Food from '../../components/animations/food/food';
 
 import getNextGuess from "../../utils/guess-machine.js";
 
@@ -32,6 +33,7 @@ const Home: React.FC<Props> = () => {
           {guess ? `My guess is ${guess}!` : ""}
         </div>
         <Monster />
+        <Food />
       </div>
       <div className="home__interactions">
         <button
