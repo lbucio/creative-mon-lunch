@@ -12,13 +12,13 @@ interface Props extends RouteComponentProps {
 const Predictions: React.FC<Props> = () => {
   let total = 0;
   const guesses = data.map(week => {
-    const correct = week.Erin === week.Actual;
+    const correct = week.Emilie === week.Actual;
     if (correct) {
       total += 1;
     }
     return {
       date: week.Date,
-      prediction: week.Erin,
+      prediction: week.Emilie,
       actual: week.Actual,
       correct
     };
@@ -36,41 +36,47 @@ const Predictions: React.FC<Props> = () => {
   }, []);
 
   return (
-    <section className="predictions">
-      <h1>Predictions</h1>
-      <div>
-        {Math.floor(percent * 100)}%{" "}
-        <svg className="predictions__ring" height="20" width="20">
-          <circle
-            className="predictions__ring-circle"
-            style={{ strokeDashoffset: circle }}
-            strokeWidth="5"
-            stroke="green"
-            fill="transparent"
-            r="7"
-            cx="10"
-            cy="10"
-          />
-        </svg>
-      </div>
-      <p>
-        {total} / {data.length}
-      </p>
-      <div className="predictions__item">
-        <p>Guess</p>
-        <p>Result</p>
-        <p>Actual</p>
-        <p>Date</p>
-      </div>
-      {guesses.map((guess: any) => (
-        <div key={guess.date} className="predictions__item">
-          <h3>{guess.prediction || "??????"}</h3>
-          <i>{guess.correct ? "✨" : "❌"}</i>
-          <h3>{guess.actual}</h3>
-          <p>{guess.date}</p>
+    <main className="container">
+      <section className="prediction">
+        <h1>Predictions</h1>
+        <div>
+          {Math.floor(percent * 100)}%{" "}
+          <svg className="predictions__ring" height="20" width="20">
+            <circle
+              className="predictions__ring-circle"
+              style={{ strokeDashoffset: circle }}
+              strokeWidth="5"
+              stroke="green"
+              fill="transparent"
+              r="7"
+              cx="10"
+              cy="10"
+            />
+          </svg>
         </div>
-      ))}
-    </section>
+        <p>
+          {total} / {data.length}
+        </p>
+        <div className="prediction__item">
+          <p className="prediction__item--large">Guess</p>
+          <p className="prediction__item--small align-center">Result</p>
+          <p className="prediction__item--large">Actual</p>
+          <p className="prediction__item--small">Date</p>
+        </div>
+        {guesses.reverse().map((guess: any) => (
+          <div key={guess.date} className="prediction__item">
+            <h3 className="prediction__item--large">
+              {guess.prediction || "??????"}
+            </h3>
+            <i className="prediction__item--small align-center">
+              {guess.correct ? "✨" : "❌"}
+            </i>
+            <h3 className="prediction__item--large">{guess.actual}</h3>
+            <p className="prediction__item--small  align-right">{guess.date}</p>
+          </div>
+        ))}
+      </section>
+    </main>
   );
 };
 

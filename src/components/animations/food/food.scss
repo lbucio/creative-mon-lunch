@@ -11,7 +11,9 @@
   justify-content: center;
   white-space: pre;
   -webkit-user-drag: none;
-}
-.food:active {
-  cursor: -webkit-grabbing;
+  z-index: 100;
+
+  &:active {
+    cursor: -webkit-grabbing;
+  }
 }
