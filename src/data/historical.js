@@ -1332,7 +1332,7 @@ const data = [
   {
     Date: "7/29/19",
     Actual: "Marvelous Catering",
-    Erin: "sandwiches",
+    Erin: "Sandwiches",
     Zach: "Zao",
     Rachel: "",
     Micaela: "",

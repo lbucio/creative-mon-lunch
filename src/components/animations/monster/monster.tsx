@@ -27,10 +27,10 @@ function MonsterMove() {
   const interpSpot = interpolate([st, xy], (o, xy) => `translate(${8 + -xy[0] / 80},${-xy[1] / 80 + -10 + o / 8})`)
   const interpMouth = interpolate([st, xy], (o, xy) => `translate(${xy[0] / 18 + 188},${xy[1] / 20 + 230 + o / 1.7}) scale(0.8)`)
   const interpHair = st.interpolate(o => `translate(79,${o / 4})`)
-  const onMove = useCallback(({ clientX: x, clientY: y }) => set({ xy: [x - window.innerWidth / 2, y - window.innerHeight / 2] }), [])
-  const onScroll = useCallback(e => set({ st: e.target.scrollTop / 30 }), [])
+  const onMove = useCallback(({ clientX: x, clientY: y }) => set({ xy: [x - window.innerWidth / 4, y - window.innerHeight / 4] }), [])
+  // const onScroll = useCallback(e => set({ st: e.target.scrollTop / 30 }), [])
   return (
-    <div className="svg-monster__container" onMouseMove={onMove} onScroll={onScroll}>
+    <div className="svg-monster__container" onMouseMove={onMove}>
       <a.svg className="svg-monster" style={{ transform: interpBg }} viewBox="0 0 490 512">
         <g id="bg">
           <path d="M490,267 C490,402.308594 380.308594,512 245,512 C109.691406,512 0,402.308594 0,267 C0,131.691406 109.691406,22 245,22 C380.308594,22 490,131.691406 490,267 Z" />

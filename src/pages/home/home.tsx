@@ -20,6 +20,7 @@ const Home: React.FC<Props> = () => {
   const startGuessGeneration = async () => {
     if (!animating) {
       setGuess(null);
+      setSeeFood(false);
       setAnimating(true);
       const guess = await getNextGuess();
       setGuess(guess);
