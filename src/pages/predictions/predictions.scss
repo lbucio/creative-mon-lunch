@@ -1,34 +1,54 @@
 .prediction {
-  &__ring-circle {
-    stroke-dasharray: 44 44;
-    stroke-dashoffset: 44;
-    transform: rotate(-90deg);
-    transform-origin: center;
-    transition: stroke-dashoffset .5s ease-out;
+  overscroll-behavior-y: contain;
+  position: fixed;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding: 0 30px;
+  background: #F2F2F2;
+
+  &__parent {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    will-change: transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  &__item {
+  &__card {
+    background-image: url('../../assets/food.png');
+    width: 45vh;
+    max-width: 300px;
+    height: 85vh;
+    max-height: 570px;
+    will-change: transform;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px 0 rgba(50, 50, 73, .2);
+    padding: 40px;
+    border: 1px solid #F2F2F2;
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
+
+    &--correct {
+      background-image: url('../../assets/bananas.png');
+      color: #666;
+    }
+  }
+
+  &__info {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid var(--color-grey-300);
+  }
 
-    &--large {
-      flex: 0 1 26%;
-      max-width: 26%;
-    }
-  
-    &--small {
-      flex: 0 1 11%;
-      max-width: 11%;
-    }
-
-    .align-center {
-      text-align: center;
-    }
-
-    .align-right {
-      text-align: right;
-    }
+  &__logo {
+    width: 100%;
+    width: 150px;
+    height: 150px;
+    border: 3px solid #1F0CAD;
+    border-radius: 50%;
   }
 }
