@@ -15,3 +15,13 @@ code {
 *, *::before, *::after {
   box-sizing: border-box;
 }
+
+
+.container {
+  padding: 0 30px;
+  margin: 0;
+
+  &--flex {
+    display: flex;
+  }
+}

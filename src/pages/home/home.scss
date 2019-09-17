@@ -4,28 +4,40 @@
   flex-flow: column;
   height: calc(100vh - 60px);
 
-  &__main {
+  &-monster__container {
     flex: 1;
-    background: #333;
     padding: 30px;
   }
 
-  &__speech {
-    background: #999;
-    padding: 15px;
-    border-radius: 15px;
-  }
+  &-monster__thought {
+    position: relative;
+    background: #794091;
+    border-radius: .4em;
+    width: 200px;
+    height: 100px;
+    margin: 0 auto;
+    padding: 10px;
+    color: white;
 
-  &__mascot {
-    &--animating {
-      animation: think .5s ease infinite;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.625em solid transparent;
+      border-top-color: #794091;
+      border-bottom: 0;
+      border-left: 0;
+      margin-left: -0.312em;
+      margin-bottom: -0.625em;
     }
   }
 
   &__interactions {
-    background: #666;
-    padding: 10px;
-    display: flex;
+    margin-bottom: 20px;
+    z-index: 100;
   }
 }
 
@@ -38,10 +50,4 @@
   font-size: 1.3rem;
   width: 100%;
   cursor: pointer;
-}
-
-@keyframes think {
-  0% { transform: scaleY(1); }
-  50% { transform: scaleY(.9); }
-  100% { transform: scaleY(1); }
 }

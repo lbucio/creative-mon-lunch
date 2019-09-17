@@ -1,18 +1,79 @@
-.predictions {
-  padding: 1rem;
+.prediction {
+  overscroll-behavior-y: contain;
+  position: fixed;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding: 0 30px;
+  background: #F2F2F2;
 
-  &__ring-circle {
-    stroke-dasharray: 44 44;
-    stroke-dashoffset: 44;
-    transform: rotate(-90deg);
-    transform-origin: center;
-    transition: stroke-dashoffset .5s ease-out;
-  }
-
-  &__item {
+  &__header {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+  }
+
+  &__parent {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    will-change: transform;
+    display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--color-grey-300);
+    justify-content: center;
+  }
+
+  &__card {
+    background-image: url('../../assets/food.png');
+    width: 45vh;
+    max-width: 300px;
+    height: 85vh;
+    max-height: 570px;
+    will-change: transform;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px 0 rgba(50, 50, 73, .2);
+    padding: 40px;
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
+
+    &--correct {
+      background-image: url('../../assets/bananas.png');
+      color: #666;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__date {
+    margin-bottom: 40px;
+  }
+
+  &__logo {
+    width: 100%;
+    width: 150px;
+    height: 150px;
+    border: 3px solid #1F0CAD;
+    border-radius: 50%;
+    background: #FFF;
+
+    &--small {
+      width: 75px;
+      height: 75px;
+    }
+  }
+
+  &__winner {
+    padding: 10px;
+    position: relative;
+  }
+
+  &__winner-text {
+    padding: 0;
+    margin: 0;
   }
 }
