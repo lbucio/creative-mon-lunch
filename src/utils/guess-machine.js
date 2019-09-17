@@ -226,7 +226,7 @@ const generateRestaurant = (
   return generated;
 };
 
-export default async function getNextGuess() {
+export default async function getNextGuess(data = lunchData) {
   // No clue
   const lstmLayerSizes = [32, 32];
 
@@ -256,7 +256,7 @@ export default async function getNextGuess() {
 
   const lunchDataObj = new LunchData(
     "lunch-data",
-    lunchData,
+    data,
     sampleLen,
     sampleStep
   );
