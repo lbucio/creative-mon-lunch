@@ -276,6 +276,7 @@ export default async function getNextGuess() {
 
   let epochCount = 0;
   let guess = "";
+
   await fitLunchModel(
     model,
     lunchDataObj,
@@ -297,6 +298,12 @@ export default async function getNextGuess() {
             displayLength,
             temperature
           );
+          if (temperature === 1 && epochCount % 5 === 0) {
+            const event = new CustomEvent("epochFinished", {
+              detail: { guess }
+            });
+            window.dispatchEvent(event);
+          }
         });
       }
     }

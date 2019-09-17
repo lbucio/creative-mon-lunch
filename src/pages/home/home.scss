@@ -6,32 +6,60 @@
 
   &-monster__container {
     flex: 1;
-    padding: 30px;
+    margin: 30px;
+    padding-top: 100px;
+    position: relative;
   }
 
   &-monster__thought {
-    position: relative;
-    background: #794091;
+    position: absolute;
+    background: #D2D2D2;
     border-radius: .4em;
-    width: 200px;
-    height: 100px;
     margin: 0 auto;
     padding: 10px;
-    color: white;
+    color: #000;
 
-    &:after {
+    &::after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 50%;
       width: 0;
       height: 0;
-      border: 0.625em solid transparent;
+      border: .625em solid transparent;
+      border-top-color: #D2D2D2;
+      border-bottom: 0;
+      border-left: 0;
+      margin-left: -.312em;
+      margin-bottom: -.625em;
+    }
+  }
+
+  &-monster__speech {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #794091;
+    border-radius: .4em;
+    width: 200px;
+    height: 100px;
+    margin: 0 auto;
+    padding: 10px;
+    color: #FFF;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: .625em solid transparent;
       border-top-color: #794091;
       border-bottom: 0;
       border-left: 0;
-      margin-left: -0.312em;
-      margin-bottom: -0.625em;
+      margin-left: -.312em;
+      margin-bottom: -.625em;
     }
   }
 
