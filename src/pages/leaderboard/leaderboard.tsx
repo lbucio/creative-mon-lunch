@@ -38,7 +38,7 @@ const items = [
 
 const Leaderboard: React.FC<Props> = () => {
   return (
-    <section>
+    <section className="container">
       <h1>Leaderboard</h1>
       <div>
         <Crowning />
