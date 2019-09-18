@@ -7,7 +7,12 @@ import GoogleSheetsService from '../../utils/google-sheets-service';
 import getNextGuess from "../../utils/guess-machine.js";
 
 import "./home.scss";
+import { Observable } from "rxjs";
 
+interface Guess {
+  guess: string;
+  epoch: number;
+}
 
 interface Props extends RouteComponentProps {}
 
@@ -36,15 +41,25 @@ const Home: React.FC<Props> = () => {
   };
 
   const startGuessGeneration = async () => {
-    const lunchData = await getLunchData();
     if (!animating) {
       setGuess(null);
       setSeeFood(false);
       setAnimating(true);
-      const guess = await getNextGuess(lunchData);
-      setGuess(guess);
-      setSeeFood(true);
-      setAnimating(false);
+      const lunchData = await getLunchData();
+      const observable: Observable<Guess> = await getNextGuess(lunchData);
+      observable.subscribe({
+        next(value) {
+          if (value.epoch % 5 === 0) {
+            setGuess(value.guess);
+          }
+        },
+        error(err) {
+          console.error('something wrong occurred: ' + err);
+        },
+        complete() {
+          setSeeFood(true);
+          setAnimating(false);
+        }})
     }
   };
 
@@ -53,8 +68,9 @@ const Home: React.FC<Props> = () => {
       <div className={`${pageName}-monster__container  container`}>
         <div className={`${pageName}-monster__thought`}>
           {!guess && !animating ? "Hi! What brings you here?" : ""}
-          {animating ? "Lemme think about this. It's quite possible it's Zao." : ""}
-          {guess ? `I'm in the mood for ${guess}!` : ""}
+          {animating && !guess ? `Let me see if I can guess what lunch will be this week...` : ""}
+          {animating && guess ? `Hm it might be ${guess}!` : ""}
+          {!animating && guess ? `I'm in the mood for ${guess}!` : ""}
           {seeFood && (
             <Food />
           )}
