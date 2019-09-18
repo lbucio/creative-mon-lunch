@@ -1,4 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
+import { Observable } from "rxjs";
 
 import data from "../data/historical";
 
@@ -227,6 +228,7 @@ const generateRestaurant = (
 };
 
 export default async function getNextGuess(data = lunchData) {
+
   // No clue
   const lstmLayerSizes = [32, 32];
 
@@ -276,31 +278,37 @@ export default async function getNextGuess(data = lunchData) {
 
   let epochCount = 0;
   let guess = "";
-  await fitLunchModel(
-    model,
-    lunchDataObj,
-    epochs,
-    examplesPerEpoch,
-    batchSize,
-    validationSplit,
-    {
-      onTrainBegin: async () => {
-        epochCount++;
-        console.log(`Epoch ${epochCount} of ${epochs}:`);
-      },
-      onTrainEnd: async () => {
-        DISPLAY_TEMPERATURES.forEach(async temperature => {
-          guess = await generateRestaurant(
-            model,
-            lunchDataObj,
-            seedIndices,
-            displayLength,
-            temperature
-          );
-        });
+  return new Observable(async (subscriber) => {
+    await fitLunchModel(
+      model,
+      lunchDataObj,
+      epochs,
+      examplesPerEpoch,
+      batchSize,
+      validationSplit,
+      {
+        onTrainBegin: async () => {
+          epochCount++;
+          console.log(`Epoch ${epochCount} of ${epochs}:`);
+        },
+        onTrainEnd: async () => {
+          DISPLAY_TEMPERATURES.forEach(async temperature => {
+              guess = await generateRestaurant(
+                model,
+                lunchDataObj,
+                seedIndices,
+                displayLength,
+                temperature
+              );
+              if (temperature === 1) {
+                subscriber.next({guess, epoch: epochCount});
+              }
+              if (epochCount === epochs) {
+                subscriber.complete();
+              }
+            });
+        }
       }
-    }
-  );
-
-  return guess;
+    );
+  });
 }

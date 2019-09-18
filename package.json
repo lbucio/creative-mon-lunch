@@ -23,6 +23,7 @@
     "react-svg": "^10.0.20",
     "react-use-gesture": "^5.2.4",
     "react-with-gesture": "^4.0.8",
+    "rxjs": "^6.5.3",
     "typescript": "3.5.3"
   },
   "scripts": {
