@@ -2,6 +2,8 @@ import React from "react";
 import { RouteComponentProps } from "@reach/router";
 import "./leaderboard.scss";
 
+import Crowning from '../../components/animations/crowning/crowning';
+
 interface Props extends RouteComponentProps {}
 const items = [
   {
@@ -39,6 +41,7 @@ const Leaderboard: React.FC<Props> = () => {
     <section>
       <h1>Leaderboard</h1>
       <div>
+        <Crowning />
         <h2>Current Champ</h2>
       </div>
       <div className="leaderboard__item">

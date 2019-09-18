@@ -1,0 +1,21 @@
+.crown {
+  position: absolute;
+  top: -100px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: pre;
+  -webkit-user-drag: none;
+  z-index: 100;
+  opacity: 0;
+  transition: 5s ease-in-out;
+}
+.people {
+  display: block;
+  margin: auto;
+  max-width: 100px;
+}
