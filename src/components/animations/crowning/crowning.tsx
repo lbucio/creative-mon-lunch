@@ -11,6 +11,7 @@ import emilie from "../../../assets/people/emilie-knecht.png";
 
 interface Props {
   clicked: boolean;
+  winners: object[];
 }
 
 const CrowningCeremony = (clicked: Props) => {
@@ -21,19 +22,31 @@ const CrowningCeremony = (clicked: Props) => {
   });
 
   const podiumTransitionThird = useSpring({
-    to: { size: '25px', background: 'red' },
-    from: { size: '0%', background: 'white' }
-  })
-
-  const podiumTransitionFirst = useSpring({
-    to: { size: '75px', background: 'red' },
-    from: { size: '0%', background: 'white' }
-  })
+    from: { height: '0px', bottom: '0%', background: 'white' },
+    to: async next => {
+      while (1) {
+        await next({ height: '99px', bottom: '50%', background: 'white' })
+      }
+    },
+  });
 
   const podiumTransitionSecond = useSpring({
-    to: { size: '50px', background: 'red' },
-    from: { size: '0%', background: 'white' }
-  })
+    from: { height: '0px', bottom: '0%', background: 'white' },
+    to: async next => {
+      while (1) {
+        await next({ height: '66px', bottom: '50%', background: 'white' })
+      }
+    },
+  });
+
+  const podiumTransitionFirst = useSpring({
+    from: { height: '0px', bottom: '0%', background: 'white' },
+    to: async next => {
+      while (1) {
+        await next({ height: '33px', bottom: '50%', background: 'white' })
+      }
+    },
+  });
 
   return (
     <div className="podium">
@@ -51,14 +64,16 @@ const CrowningCeremony = (clicked: Props) => {
                 <animated.img
                   key={key}
                   style={props}
-                  src={emilie}
-                  className="people"
+                  src={winners[2].img}
+                  className="people people__third"
                 />
               </>
             )
         )}
-
-      <animated.div style={podiumTransitionThird} className="third-podium">3</animated.div>
+        <div className="podium__container">
+          <animated.div style={podiumTransitionThird} className="podium__third" />
+          <p className="podium__number">3</p>
+        </div>
       </div>
       <div className="first-place">
         {fade.map(
@@ -74,13 +89,16 @@ const CrowningCeremony = (clicked: Props) => {
                 <animated.img
                   key={key}
                   style={props}
-                  src={emilie}
-                  className="people"
+                  src={winners[0].img}
+                  className="people people__first"
                 />
               </>
             )
         )}
-        <animated.div style={podiumTransitionFirst} className="first-podium">1</animated.div>
+        <div className="podium__container">
+          <animated.div style={podiumTransitionFirst} className="podium__first" />
+          <p className="podium__number">1</p>
+        </div>
       </div>
       <div className="second-place">
         {fade.map(
@@ -96,13 +114,16 @@ const CrowningCeremony = (clicked: Props) => {
                 <animated.img
                   key={key}
                   style={props}
-                  src={emilie}
-                  className="people"
+                  src={winners[1].img}
+                  className="people people__second"
                 />
               </>
             )
         )}
-        <animated.div style={podiumTransitionSecond} className="second-podium">2</animated.div>
+        <div className="podium__container">
+          <animated.div style={podiumTransitionSecond} className="podium__second" />
+          <p className="podium__number">2</p>
+        </div>
       </div>
     </div>
   );
