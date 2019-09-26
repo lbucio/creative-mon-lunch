@@ -78,6 +78,7 @@ const getAllLunchGuesses = async () => {
   TEAM_MEMBERS.map((member, i) => {
     i += GOOGLE_SHEET_OFFSET;
     const data = getData(ALPHABET[i]);
+    // TODO: This is where it needs to be hooked up
     // make sure the sheet returns blanks
     // set the member.data = data returned from the promise
 
