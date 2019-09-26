@@ -21,18 +21,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    top: 0;
+    left: 0;
   }
 
   &__card {
+    backface-visibility: visible;
     background-image: url('../../assets/food.png');
     width: 45vh;
     max-width: 300px;
-    height: 85vh;
-    max-height: 570px;
+    height: 450px;
     will-change: transform;
     border-radius: 10px;
     box-shadow: 3px 3px 8px 0 rgba(50, 50, 73, .2);
-    padding: 40px;
+    padding: 25px;
     color: #FFF;
     text-align: center;
     font-weight: bold;

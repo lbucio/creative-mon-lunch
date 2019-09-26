@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RouteComponentProps } from "@reach/router";
 import { useSprings, animated, interpolate } from "react-spring";
 import { useGesture } from "react-use-gesture";
 
-import data from "../../data/historical";
+import GoogleSheetsService from "../../utils/google-sheets-service";
 
 import "./predictions.scss";
 
@@ -23,6 +23,12 @@ import zao from "../../assets/logos/zao.jpg";
 import zupas from "../../assets/logos/zupas.png";
 // random lunch choice
 import lunch from "../../assets/logos/lunch-box.png";
+
+interface Guess {
+  actual: string;
+  guess: string;
+  date: string;
+}
 
 interface Props extends RouteComponentProps {
   prediction?: string;
@@ -47,23 +53,9 @@ const logos = {
 
 let totalCorrect = 0;
 
-const cards = data.map(week => {
-  const actual = week.Actual;
-  const guess = week.Erin;
-  const date = week.Date;
-  if (actual === guess) {
-    totalCorrect += 1;
-  }
-  return {
-    actual,
-    guess,
-    date
-  };
-});
-
 const to = (i: number) => ({
-  x: -20,
-  y: i * -2,
+  x: 0,
+  y: i * -3,
   scale: 1,
   rot: -10 + Math.random() * 20,
   delay: i * 10
@@ -76,10 +68,9 @@ const trans = (r: number, s: number) =>
     10}deg) rotateZ(${r}deg) scale(${s})`;
 
 const Predictions: React.FC<Props> = () => {
-  const total = cards;
-
+  const [data, setData] = useState<Array<Guess>>([]);
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
-  const [props, set] = useSprings(cards.length, i => ({
+  const [props, set] = useSprings(data.length, i => ({
     ...to(i),
     from: from()
   }));
@@ -105,12 +96,51 @@ const Predictions: React.FC<Props> = () => {
           config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 }
         };
       });
-      if (!down && gone.size === cards.length) {
+      if (!down && gone.size === data.length) {
         // @ts-ignore
         setTimeout(() => gone.clear() || set((i: number) => to(i)), 600);
       }
     }
   );
+
+  const getLunchData = async (): Promise<string[] | undefined> => {
+    try {
+      const googleSheetService = new GoogleSheetsService();
+      const sheetId = "1TjC2G4OJowhARGp7dtvs1gj0Ws11K4tyO5yI5emNVWA";
+      const query = "select+A,B,D";
+      const response = await googleSheetService.getSheet(sheetId, query);
+      const data: string[] = response
+        .filter(row => row[1])
+        .slice(0, 25)
+        .map(row => {
+          if (row[2] === row[1]) {
+            totalCorrect += 1;
+          }
+          return {
+            actual: row[1],
+            guess: row[2],
+            date: row[0]
+          };
+        });
+
+      return new Promise(resolve => {
+        resolve(data);
+      });
+    } catch (error) {
+      return new Promise(resolve => {
+        resolve(undefined);
+      });
+    }
+  };
+
+  useEffect(() => {
+    async function getData() {
+      const data = await getLunchData();
+      // @ts-ignore
+      setData(data);
+    }
+    getData();
+  }, []);
 
   return (
     <main>
@@ -118,13 +148,13 @@ const Predictions: React.FC<Props> = () => {
         <div className="prediction__header">
           <h1>Predictions</h1>
           <h4>
-            {totalCorrect} / {cards.length}
+            {totalCorrect} / {data.length}
           </h4>
         </div>
 
         <div>
           {props.map(({ x, y, rot, scale }, i) => {
-            const card = cards[i];
+            const card = data[i];
             const date = new Date(card.date);
             const actual = card.actual;
             const guess = card.guess;
